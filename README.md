@@ -5,10 +5,6 @@ Install dependencies:
     sudo gem install sass
     npm install
 
-Build website:
-
-    gulp
-
-Run webserver:
+Then run website:
 
     gulp start
