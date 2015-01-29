@@ -21,11 +21,43 @@
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
 
-  <header></header>
+  <header>
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="...">
+          </a>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-  <div ui-view="list"></div>
+  <div class="container">
+    <div class="row">
 
-  <div ui-view="pie"></div>
+      <!-- List section -->
+      <div class="col-xs-12">
+        <div
+          class="row"
+          ui-view="list"
+        >
+        </div>
+      </div>
+      <!-- End list section -->
+
+      <!-- Pie section -->
+      <div class="col-xs-12">
+        <div
+          class="row"
+          ui-view="pie"
+        >
+        </div>
+      </div>
+      <!-- End pie section -->
+
+    </div>
+  </div>
 
   <footer></footer>
 
