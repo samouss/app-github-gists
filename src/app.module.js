@@ -1,16 +1,21 @@
 (function() {
 
   /**
-  * Gistdash Module
+  * App main module
   *
   * Main module of app app
   */
   angular
     .module('app', [
-      // Core dependency
-      'app.core'
+      // Third party dependency
+      'ui.router',
+
+      // Core app dependency
+      'app.routes',
 
       // Feature dependency
+      'app.pie',
+      'app.list'
     ])
   ;
 
