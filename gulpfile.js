@@ -117,7 +117,7 @@ gulp.task('sass', ['cssToScss'], function() {
       loadPath: config.sass.includes.concat(config.sass.requires)
     })
     .pipe(plumber())
-    .pipe(sourcemaps.write(config.sass.maps_dir))
+    .pipe(gulpif(argv.prod !== undefined, sourcemaps.write(config.sass.maps_dir)))
     .pipe(gulpif(argv.prod !== undefined, minifyCSS()))
     .pipe(gulp.dest(path.join(config.build_dir, config.sass.dest_dir)))
     .pipe(browserSync.reload({stream:true}))
