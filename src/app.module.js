@@ -11,6 +11,7 @@
       'ui.router',
 
       // Core app dependency
+      'app.config',
       'app.routes',
 
       // Feature dependency
