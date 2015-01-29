@@ -27,11 +27,14 @@
                 controllerAs: 'vm'
               }
             },
-            resolve: [
-              function() {
-                return [];
-              }
-            ]
+            resolve: {
+              files: [
+                'DataService',
+                function(DataService) {
+                  return DataService.getGistsFiles();
+                }
+              ]
+            }
           })
 
         ;

@@ -26,13 +26,13 @@
 
     var vm = this;
 
-    vm.getGists = getGists;
+    vm.getGistsFiles = getGistsFiles;
 
     /**
      * Get lest 100 gists - Method: GET - URL: /gists/public
      * @return {promise} [description]
      */
-    function getGists() {
+    function getGistsFiles() {
       var defer = $q.defer();
 
       $http
@@ -45,7 +45,16 @@
           }
         )
         .success(function(data, status) {
-          defer.resolve(data);
+          var files = [];
+
+          console.log(data.length);
+          data.forEach(function(gists) {
+            for (var i in gists.files) {
+              files.push(gists.files[i]);
+            }
+          });
+
+          defer.resolve(files);
         })
         .error(function(data, status) {
           defer.reject(data);
