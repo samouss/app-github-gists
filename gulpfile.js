@@ -224,7 +224,7 @@ gulp.task('dumpjs', function() {
 // --------------------------------
 
 gulp.task('start', ['default', 'browser-sync'], function() {
-  gulp.watch(path.join(config.sass.source_dir, '../**/*.scss'), ['sass']);
+  gulp.watch(path.join(config.sass.source_dir, '*.scss'), ['sass']);
   gulp.watch(path.join(config.js.source_dir, '**/*.js'), ['js']);
   gulp.watch(path.join(config.html.source_dir, '**/*.html'), ['html']);
   gulp.watch(Object.keys(config.dump_files), ['dump']);
