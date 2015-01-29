@@ -158,9 +158,11 @@ gulp.task('js', ['lint'], function() {
 
   var files = [];
 
-  files.push(path.join(config.js.source_dir, 'app.js'));
-  files.push(path.join(config.js.source_dir, 'common/**/*.js'));
-  files.push(path.join(config.js.source_dir, '/**/*.js'));
+  files.push(path.join(config.js.source_dir, '/**/!(app).module.js'));
+  files.push(path.join(config.js.source_dir, '/**/!(app)*.js'));
+  files.push(path.join(config.js.source_dir, '/**/app.module.js'));
+  files.push(path.join(config.js.source_dir, '/**/app.config.js'));
+  files.push(path.join(config.js.source_dir, '/**/app.routes.js'));
 
   return gulp.src(files)
     .pipe(plumber())
