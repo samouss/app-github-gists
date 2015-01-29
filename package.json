@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "App display last 100 public Gist from Github",
   "scripts": {
+    "postinstall": "bower install",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
