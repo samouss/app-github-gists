@@ -13,6 +13,7 @@
       // Core app dependency
       'app.config',
       'app.routes',
+      'app.services',
 
       // Feature dependency
       'app.pie',
