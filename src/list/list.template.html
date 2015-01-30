@@ -8,7 +8,8 @@
             <input
               type="text"
               class="form-control"
-              placeholder="Rechercher"
+              placeholder="Search"
+              ng-model="vm.pattern"
             >
           </div>
         </form>
@@ -19,15 +20,36 @@
             <tr>
               <th class="td-username"></th>
               <th>Filename</th>
+              <th>Type</th>
+              <th>Language</th>
+              <th>Size</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr>
+            <tr
+              ng-repeat="file in vm.files | filter: vm.pattern track by file.raw_url"
+            >
               <td>
-                <img src="https://avatars.githubusercontent.com/u/453997?v=3" class="img-circle" alt="">
-                <span class="username">Bobby Github</span>
+                <img
+                  alt="Github avatar profile"
+                  class="img-circle"
+                  ng-if="file.owner"
+                  ng-src="{{ file.owner.avatar_url }}"
+                >
+                <i
+                  ng-if="!file.owner"
+                  class="fa fa-github"
+                ></i>
+                <span
+                  class="username"
+                >{{ file.owner.login || '-' }}</span>
               </td>
-              <td><span>file.js</span></td>
+              <td><span>{{ ::file.filename }}</span></td>
+              <td><span>{{ ::file.type }}</span></td>
+              <td><span>{{ ::file.language || '-' }}</span></td>
+              <td><span>{{ ::file.size }}</span></td>
+              <td><a href=""></a></td>
             </tr>
           </tbody>
         </table>
