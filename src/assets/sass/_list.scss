@@ -1,6 +1,20 @@
 // List
+form {
+  .form-group {
+    margin-bottom: 0;
+  }
+  .radio {
+    margin-top: 3px;
+  }
+  input[type="radio"] {
+    margin-top: 2px;
+  }
+}
 .table-gist {
 
+  .td-username {
+    word-wrap: nowrap;
+  }
   td {
     vertical-align: middle !important;
   }
