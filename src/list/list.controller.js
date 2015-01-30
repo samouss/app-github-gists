@@ -15,11 +15,7 @@
    * [ListController description]
    */
   function ListController(files) {
-
-    var vm = this;
-
-    vm.files = files;
-
+    console.log(files);
   }
 
 }());
