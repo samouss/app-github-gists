@@ -4,6 +4,32 @@
     <div class="panel-body">
       <div class="col-xs-12">
         <form class="form-horizontal">
+          <div class="form-group radio col-xs-6">
+            <label class="radio-inline">
+              <input
+                type="radio"
+                name="regex"
+                value="##PATTERN##"
+                ng-model="vm.regex"
+              > Match all
+            </label>
+            <label class="radio-inline">
+              <input
+                type="radio"
+                name="regex"
+                value="^##PATTERN##"
+                ng-model="vm.regex"
+              > Begin with
+            </label>
+            <label class="radio-inline">
+              <input
+                type="radio"
+                name="regex"
+                value="##PATTERN##$"
+                ng-model="vm.regex"
+              > End with
+            </label>
+          </div>
           <div class="pull-right form-group col-xs-4">
             <input
               type="text"
@@ -14,45 +40,50 @@
           </div>
         </form>
       </div>
+      <div class="row">
+        <hr class="col-xs-12">
+      </div>
       <div class="col-xs-12">
-        <table class="table table-hover table-gist">
-          <thead>
-            <tr>
-              <th class="td-username"></th>
-              <th>Filename</th>
-              <th>Type</th>
-              <th>Language</th>
-              <th>Size</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              ng-repeat="file in vm.files | filter: vm.pattern track by file.raw_url"
-            >
-              <td>
-                <img
-                  alt="Github avatar profile"
-                  class="img-circle"
-                  ng-if="file.owner"
-                  ng-src="{{ file.owner.avatar_url }}"
-                >
-                <i
-                  ng-if="!file.owner"
-                  class="fa fa-github"
-                ></i>
-                <span
-                  class="username"
-                >{{ file.owner.login || '-' }}</span>
-              </td>
-              <td><span>{{ ::file.filename }}</span></td>
-              <td><span>{{ ::file.type }}</span></td>
-              <td><span>{{ ::file.language || '-' }}</span></td>
-              <td><span>{{ ::file.size }}</span></td>
-              <td><a href=""></a></td>
-            </tr>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-hover table-gist">
+            <thead>
+              <tr>
+                <th class="td-username"></th>
+                <th>Filename</th>
+                <th>Type</th>
+                <th>Language</th>
+                <th>Size</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                ng-repeat="file in vm.files | regex: { pattern: vm.pattern, regex: vm.regex } track by file.raw_url"
+              >
+                <td>
+                  <img
+                    alt="Github avatar profile"
+                    class="img-circle"
+                    ng-if="file.owner"
+                    ng-src="{{ file.owner.avatar_url }}"
+                  >
+                  <i
+                    ng-if="!file.owner"
+                    class="fa fa-github"
+                  ></i>
+                  <span
+                    class="username"
+                  >{{ file.owner.login || '-' }}</span>
+                </td>
+                <td><span>{{ ::file.filename }}</span></td>
+                <td><span>{{ ::file.type }}</span></td>
+                <td><span>{{ ::file.language || '-' }}</span></td>
+                <td><span>{{ ::file.size }}</span></td>
+                <td><a href=""></a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>

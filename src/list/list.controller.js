@@ -20,6 +20,9 @@
 
     vm.files = files;
 
+    vm.regex = '##PATTERN##';
+    vm.pattern = '';
+
   }
 
 }());
