@@ -10,6 +10,10 @@
       ENDPOINT: 'https://api.github.com'
     })
 
+    .constant('GISTS', {
+      PER_PAGE: 100
+    })
+
   ;
 
 }());
