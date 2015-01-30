@@ -5,7 +5,11 @@
   */
   angular
     .module('app.components', [
-      'regex.filter'
+      // Filters
+      'regex.filter',
+
+      // Directives
+      'pie-chart.directive'
     ])
   ;
 
