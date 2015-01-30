@@ -14,6 +14,7 @@
       'app.config',
       'app.routes',
       'app.services',
+      'app.components',
 
       // Feature dependency
       'app.pie',
