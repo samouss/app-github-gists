@@ -14,6 +14,8 @@
       PER_PAGE: 100
     })
 
+    .constant('d3', d3)
+
   ;
 
 }());
