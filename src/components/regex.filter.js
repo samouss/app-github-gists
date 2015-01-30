@@ -17,13 +17,10 @@
   // EXPORT ###PATTERN### IN
   // CONFIG FILE
 
-  // ADD SELECT FOR CHOOSE
-  // WHICH RESOURCE TO SEARCH
-
   function Regex() {
     return function(input, params) {
-      var output = input,
-          regex = new RegExp(params.regex.replace('##PATTERN##', params.pattern), 'gi');
+      var output = input;
+          regex = new RegExp(params.regex.replace('##PATTERN##', params.pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), 'gi');
 
       if (params.pattern !== '') {
         output = [];
