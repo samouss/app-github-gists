@@ -9,18 +9,24 @@
   angular
     .module('regex.filter', [
     ])
+    .constant('REGEX', {
+      PATTERN: '##PATTERN##'
+    })
     .filter('regex', [
+      'REGEX',
       Regex
     ])
   ;
 
-  // EXPORT ###PATTERN### IN
-  // CONFIG FILE
-
-  function Regex() {
+  /**
+   * Regex filter function
+   * @param  {constant} REGEX
+   * @return {array}
+   */
+  function Regex(REGEX) {
     return function(input, params) {
       var output = input;
-          regex = new RegExp(params.regex.replace('##PATTERN##', params.pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), 'gi');
+          regex = new RegExp(params.regex.replace(REGEX.PATTERN, params.pattern.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")), 'gi');
 
       if (params.pattern !== '') {
         output = [];

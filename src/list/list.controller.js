@@ -6,21 +6,24 @@
   angular
     .module('app.list')
     .controller('ListController', [
+      'REGEX',
       'files',
       ListController
     ])
   ;
 
   /**
-   * [ListController description]
+   * List controller
+   * @param {constant} REGEX
+   * @param {object}   files
    */
-  function ListController(files) {
+  function ListController(REGEX, files) {
 
     var vm = this;
 
     vm.files = files;
 
-    vm.regex = '##PATTERN##';
+    vm.regex = REGEX.PATTERN;
     vm.pattern = '';
     vm.field = 'filename';
 
