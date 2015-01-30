@@ -17,6 +17,9 @@
   // EXPORT ###PATTERN### IN
   // CONFIG FILE
 
+  // ADD SELECT FOR CHOOSE
+  // WHICH RESOURCE TO SEARCH
+
   function Regex() {
     return function(input, params) {
       var output = input,
