@@ -56,6 +56,7 @@
 
           data.forEach(function(gists) {
             for (var i in gists.files) {
+              gists.files[i].owner = gists.owner;
               files.push(gists.files[i]);
             }
           });
