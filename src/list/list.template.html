@@ -4,7 +4,24 @@
     <div class="panel-body">
       <div class="col-xs-12">
         <form class="form-horizontal">
-          <div class="form-group radio col-xs-6">
+          <div class="form-group col-xs-4">
+            <div class="row">
+              <label class="control-label col-xs-5" for="">Filed to search</label>
+              <div class="col-xs-6">
+                <select
+                  class="form-control"
+                  ng-model="vm.field"
+                >
+                  <option value="filename">Filename</option>
+                  <option value="login">Username</option>
+                  <option value="type">Type</option>
+                  <option value="language">Language</option>
+                  <option value="size">Size</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="form-group radio col-xs-5">
             <label class="radio-inline">
               <input
                 type="radio"
@@ -58,22 +75,22 @@
             </thead>
             <tbody>
               <tr
-                ng-repeat="file in vm.files | regex: { pattern: vm.pattern, regex: vm.regex } track by file.raw_url"
+                ng-repeat="file in vm.files | regex: { pattern: vm.pattern, regex: vm.regex, field: vm.field } track by file.raw_url"
               >
                 <td>
                   <img
                     alt="Github avatar profile"
                     class="img-circle"
-                    ng-if="file.owner"
-                    ng-src="{{ file.owner.avatar_url }}"
+                    ng-if="file.login"
+                    ng-src="{{ file.avatar_url }}"
                   >
                   <i
-                    ng-if="!file.owner"
+                    ng-if="!file.login"
                     class="fa fa-github"
                   ></i>
                   <span
                     class="username"
-                  >{{ file.owner.login || '-' }}</span>
+                  >{{ file.login || '-' }}</span>
                 </td>
                 <td><span>{{ ::file.filename }}</span></td>
                 <td><span>{{ ::file.type }}</span></td>

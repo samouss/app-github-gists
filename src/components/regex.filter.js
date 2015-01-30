@@ -28,7 +28,7 @@
       if (params.pattern !== '') {
         output = [];
         input.forEach(function(file) {
-          if (regex.test(file.filename)) {
+          if (regex.test(file[params.field])) {
             output.push(file);
           }
         });

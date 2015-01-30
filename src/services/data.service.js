@@ -56,7 +56,8 @@
 
           data.forEach(function(gists) {
             for (var i in gists.files) {
-              gists.files[i].owner = gists.owner;
+              gists.files[i].login = (gists.owner) ? gists.owner.login : undefined;
+              gists.files[i].avatar_url = (gists.owner) ? gists.owner.avatar_url : undefined;
               files.push(gists.files[i]);
             }
           });

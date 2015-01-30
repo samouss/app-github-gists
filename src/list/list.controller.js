@@ -22,6 +22,7 @@
 
     vm.regex = '##PATTERN##';
     vm.pattern = '';
+    vm.field = 'filename';
 
   }
 
