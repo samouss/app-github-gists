@@ -24,7 +24,7 @@
       restrict: 'E',
       template: '<div id="chart"></div>',
       link: function($scope, iElm, iAttrs, controller) {
-        var width = 360,
+        var width = 600,
             height = 360,
             legendRectSize = 18,
             legendSpacing = 4,
@@ -38,7 +38,7 @@
             .attr('width', width)
             .attr('height', height)
             .append('g')
-              .attr('transform', 'translate(' + (width / 2) + ',' + (height / 2) + ')')
+              .attr('transform', 'translate(' + (height / 2) + ',' + (height / 2) + ')')
         ;
 
         var arc = d3.svg.arc()
@@ -62,6 +62,9 @@
             })
         ;
 
+        /**
+         * Legend
+         */
         var legend = svg
           .selectAll('.legend')
           .data(color.domain())
@@ -69,10 +72,10 @@
           .append('g')
             .attr('class', 'legend')
             .attr('transform', function(d, i) {
-              var height = legendRectSize + legendSpacing,
-                  offset =  height * color.domain().length / 2,
-                  horz = -2 * legendRectSize,
-                  vert = i * height - offset;
+              var lHeight = legendRectSize + legendSpacing,
+                  offset =  lHeight * color.domain().length / 2,
+                  horz = (height / 2) + 50,
+                  vert = i * lHeight - offset;
 
               return 'translate(' + horz + ',' + vert + ')';
             })
@@ -91,6 +94,56 @@
           .text(function(d) { return d; })
         ;
 
+        /**
+         * Tooltip
+         */
+        var tooltip = d3
+          .select('#chart')
+          .append('div')
+            .attr('class', 'info-pie')
+        ;
+
+        tooltip
+          .append('div')
+            .attr('class', 'pie-label')
+        ;
+
+        tooltip
+          .append('div')
+            .attr('class', 'stats')
+            .append('span')
+              .attr('class', 'pie-percent')
+        ;
+
+        tooltip
+          .select('.stats')
+            .append('span')
+            .attr('class', 'pie-count')
+        ;
+
+        path.on('mouseover', function(d) {
+          var el = this,
+              elChart = document.getElementById('chart')
+          ;
+
+          var total = d3.sum($scope.data.map(function(d) { return d.count; }));
+          tooltip.select('.pie-label').html(d.data.language);
+          tooltip.select('.pie-percent').html(Math.round(((100 * d.data.count) / total)) + '%');
+          tooltip.select('.pie-count').html('(' + d.data.count + ')');
+
+          tooltip
+            .style('display', 'block')
+            .style('left', ((el.getBoundingClientRect().left - elChart.getBoundingClientRect().left) + (el.getBoundingClientRect().width / 2)) - (document.querySelector('.info-pie').getBoundingClientRect().width / 2) + 'px')
+            .style('top', ((el.getBoundingClientRect().top - elChart.getBoundingClientRect().top) + (el.getBoundingClientRect().height / 2)) - (document.querySelector('.info-pie').getBoundingClientRect().height / 2) + 'px')
+          ;
+
+        });
+
+        path.on('mouseout', function() {
+          tooltip
+            .style('display', 'none')
+          ;
+        });
 
       }
     };
