@@ -6,6 +6,7 @@
   angular
     .module('app.pie')
     .controller('PieController', [
+      'stats',
       PieController
     ])
   ;
@@ -13,32 +14,11 @@
   /**
    * [PieController description]
    */
-  function PieController() {
+  function PieController(stats) {
 
     var vm = this;
 
-    vm.files = [
-      {
-        label: 'JSON',
-        count: 10
-      },
-      {
-        label: 'HTML',
-        count: 4
-      },
-      {
-        label: 'CSS',
-        count: 12
-      },
-      {
-        label: 'JavaScript',
-        count: 7
-      },
-      {
-        label: 'PHP',
-        count: 3
-      }
-    ];
+    vm.stats = stats;
 
   }
 

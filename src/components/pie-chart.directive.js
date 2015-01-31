@@ -58,7 +58,7 @@
             .append('path')
             .attr('d', arc)
             .attr('fill', function(d, i) {
-              return color(d.data.label);
+              return color(d.data.language);
             })
         ;
 
