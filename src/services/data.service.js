@@ -27,10 +27,12 @@
 
     var vm = this;
 
-    vm.getGistsFiles = getGistsFiles;
+    vm.getGists = getGists;
+    vm.getListFiles = getListFiles;
+    vm.getStatFiles = getStatFiles;
 
     /**
-     * Get lest 100 gists
+     * Get last 100 gists
      *
      * Method: GET
      * URL: /gists/public?per_page={GISTS.PER_PAGE}
@@ -38,7 +40,7 @@
      * @param  {integer} page
      * @return {promise}
      */
-    function getGistsFiles(page) {
+    function getGists(page) {
       var defer = $q.defer(),
           _page = page || 1;
 
@@ -52,17 +54,7 @@
           }
         )
         .success(function(data, status) {
-          var files = [];
-
-          data.forEach(function(gists) {
-            for (var i in gists.files) {
-              gists.files[i].login = (gists.owner) ? gists.owner.login : undefined;
-              gists.files[i].avatar_url = (gists.owner) ? gists.owner.avatar_url : undefined;
-              files.push(gists.files[i]);
-            }
-          });
-
-          defer.resolve(files);
+          defer.resolve(data);
         })
         .error(function(data, status) {
           defer.reject(data);
@@ -70,6 +62,61 @@
       ;
 
       return defer.promise;
+    }
+
+    /**
+     * Get list files for list view
+     * @param  {array} gists
+     * @return {array}
+     */
+    function getListFiles(gists) {
+      var files = [];
+
+      gists.forEach(function(gist) {
+        Object.keys(gist.files).forEach(function(i) {
+          if (gist.owner) {
+            this[i].login = gist.owner.login;
+            this[i].avatar_url = gist.owner.avatar_url;
+          }
+          files.push(this[i]);
+        }, gist.files);
+      });
+
+      return files;
+    }
+
+    /**
+     * Get stats files for pie view
+     * @param  {array} gists
+     * @return {array}
+     */
+    function getStatFiles(gists) {
+      var stats = [];
+
+      gists.forEach(function(gist) {
+        Object.keys(gist.files).forEach(function(i) {
+          var self = this,
+              index = null;
+
+          stats.some(function(item, _index) {
+            if ((self[i].language || '-') === item.language) {
+              index = _index;
+              return true;
+            }
+          });
+
+          if (index !== null) {
+            stats[index].count++;
+          } else {
+            stats.push({
+              language: (self[i].language || '-'),
+              count: 1
+            });
+          }
+        }, gist.files);
+      });
+
+      return stats;
     }
 
   }

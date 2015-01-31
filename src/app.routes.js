@@ -15,25 +15,43 @@
 
           .state('root', {
             url: '/',
+            resolve: {
+              gists: [
+                'DataService',
+                function(DataService) {
+                  return DataService.getGists();
+                }
+              ]
+            },
             views: {
               'list': {
                 templateUrl: 'list/list.template.html',
                 controller: 'ListController',
-                controllerAs: 'vm'
+                controllerAs: 'vm',
+                resolve: {
+                  files: [
+                    'gists',
+                    'DataService',
+                    function(gists, DataService) {
+                      return DataService.getListFiles(gists);
+                    }
+                  ]
+                }
               },
               'pie': {
                 templateUrl: 'pie/pie.template.html',
                 controller: 'PieController',
-                controllerAs: 'vm'
-              }
-            },
-            resolve: {
-              files: [
-                'DataService',
-                function(DataService) {
-                  return DataService.getGistsFiles();
+                controllerAs: 'vm',
+                resolve: {
+                  stats: [
+                    'gists',
+                    'DataService',
+                    function(gists, DataService) {
+                      return DataService.getStatFiles(gists);
+                    }
+                  ]
                 }
-              ]
+              }
             }
           })
 
