@@ -14,7 +14,8 @@
         $stateProvider
 
           .state('root', {
-            url: '/',
+            templateUrl: 'root/root.template.html',
+            controller: 'RootController',
             resolve: {
               gists: [
                 'DataService',
@@ -22,7 +23,11 @@
                   return DataService.getGists();
                 }
               ]
-            },
+            }
+         })
+
+         .state('root.index', {
+            url: '/',
             views: {
               'list': {
                 templateUrl: 'list/list.template.html',
@@ -60,7 +65,7 @@
         $urlRouterProvider
           .otherwise(function($injector, $location) {
             var $state = $injector.get('$state');
-            $state.go('root');
+            $state.go('root.index');
           })
         ;
 

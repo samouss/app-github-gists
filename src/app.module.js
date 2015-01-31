@@ -17,6 +17,7 @@
       'app.components',
 
       // Feature dependency
+      'app.root',
       'app.pie',
       'app.list'
     ])
