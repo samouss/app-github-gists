@@ -24,13 +24,16 @@
       restrict: 'E',
       template: '<div id="chart"></div>',
       link: function($scope, iElm, iAttrs, controller) {
-        var width = 600,
+        var width = 800,
             height = 360,
-            legendRectSize = 18,
-            legendSpacing = 4,
             innerRadius = 75,
             outerRadius = Math.min(width, height) / 2,
-            color = d3.scale.category20c();
+            color = d3.scale.category20c(),
+            legendThumbSize = 18,
+            legendHeightSpacing = 4,
+            legendWidthSpacing = 175,
+            legendMaxColumn = 10
+        ;
 
         var svg = d3
           .select('#chart')
@@ -72,25 +75,26 @@
           .append('g')
             .attr('class', 'legend')
             .attr('transform', function(d, i) {
-              var lHeight = legendRectSize + legendSpacing,
-                  offset =  lHeight * color.domain().length / 2,
-                  horz = (height / 2) + 50,
-                  vert = i * lHeight - offset;
+              var currentHeight = legendThumbSize + legendHeightSpacing,
+                  offset = currentHeight * legendMaxColumn / 2,
+                  x = ((height / 2) + (height / 4)) + (legendWidthSpacing * Math.floor(i / legendMaxColumn)),
+                  y = (i - (Math.floor(i / legendMaxColumn) * legendMaxColumn))  * currentHeight - offset
+              ;
 
-              return 'translate(' + horz + ',' + vert + ')';
+              return 'translate(' + x + ',' + y + ')';
             })
         ;
 
         legend.append('rect')
-          .attr('width', legendRectSize)
-          .attr('height', legendRectSize)
+          .attr('width', legendThumbSize)
+          .attr('height', legendThumbSize)
           .style('fill', color)
           .style('stroke', color)
         ;
 
         legend.append('text')
-          .attr('x', legendRectSize + legendSpacing)
-          .attr('y', legendRectSize - legendSpacing)
+          .attr('x', legendThumbSize + legendHeightSpacing)
+          .attr('y', legendThumbSize - legendHeightSpacing)
           .text(function(d) { return d; })
         ;
 
