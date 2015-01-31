@@ -4,7 +4,10 @@
   * Services Module
   */
   angular
-    .module('app.services', [])
+    .module('app.services', [
+      'data.service',
+      'reload.service'
+    ])
   ;
 
 }());

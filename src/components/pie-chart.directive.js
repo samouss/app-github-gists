@@ -35,6 +35,10 @@
             legendMaxColumn = 10
         ;
 
+        $scope.$watch('data', function(newData) {
+          $scope.data = newData;
+        });
+
         var svg = d3
           .select('#chart')
           .append('svg')

@@ -6,12 +6,15 @@
   angular
     .module('app.root')
     .controller('RootController', [
+      'ReloadService',
       RootController
     ])
   ;
 
-  function RootController() {
-
-  }
+  /**
+   * [RootController description]
+   * @param {[type]} ReloadService [description]
+   */
+  function RootController(ReloadService) {}
 
 }());
