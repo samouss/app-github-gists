@@ -24,7 +24,7 @@
       restrict: 'E',
       template: '<div id="chart"></div>',
       link: function($scope, iElm, iAttrs, controller) {
-        var width = 800,
+        var width = 900,
             height = 360,
             innerRadius = 75,
             outerRadius = Math.min(width, height) / 2,
@@ -35,8 +35,16 @@
             legendMaxColumn = 10
         ;
 
-        $scope.$watch('data', function(newData) {
-          $scope.data = newData;
+        $scope.$watch('data', function(newData, oldData) {
+          if (newData !== oldData) {
+
+            $scope.data = newData;
+
+            updatePath();
+
+            updateLegend();
+
+          }
         });
 
         var svg = d3
@@ -58,49 +66,108 @@
           .sort(null)
         ;
 
-        var path = svg
-          .selectAll('path')
-          .data(pie($scope.data))
-          .enter()
+        var path = svg.selectAll('path');
+
+        /**
+         * [addPath description]
+         */
+        function updatePath() {
+
+          path = path
+            .data(pie($scope.data))
+          ;
+
+          path
+            .enter()
             .append('path')
-            .attr('d', arc)
-            .attr('fill', function(d, i) {
-              return color(d.data.language);
-            })
-        ;
+              .attr('d', arc)
+              .attr('fill', function(d, i) {
+                return color(d.data.language);
+              })
+              .each(function(d) {
+                this.currentValue = d;
+              })
+          ;
+
+          path
+            .exit()
+            .transition()
+            .duration(750)
+            .attrTween("d", arcTween)
+            .remove()
+          ;
+
+          path
+            .transition()
+            .duration(750)
+            .attrTween("d", arcTween)
+          ;
+
+        }
+
+        updatePath();
+
+        function arcTween(d) {
+          var interpolate = d3.interpolate(this.currentValue, d);
+          this.currentValue = interpolate(0);
+          return function(t) {
+            return arc(interpolate(t));
+          };
+        }
 
         /**
          * Legend
          */
-        var legend = svg
-          .selectAll('.legend')
-          .data(color.domain())
-          .enter()
-          .append('g')
-            .attr('class', 'legend')
-            .attr('transform', function(d, i) {
-              var currentHeight = legendThumbSize + legendHeightSpacing,
-                  offset = currentHeight * legendMaxColumn / 2,
-                  x = ((height / 2) + (height / 4)) + (legendWidthSpacing * Math.floor(i / legendMaxColumn)),
-                  y = (i - (Math.floor(i / legendMaxColumn) * legendMaxColumn))  * currentHeight - offset
-              ;
 
-              return 'translate(' + x + ',' + y + ')';
-            })
-        ;
+        var legend = svg.selectAll('.legend');
 
-        legend.append('rect')
-          .attr('width', legendThumbSize)
-          .attr('height', legendThumbSize)
-          .style('fill', color)
-          .style('stroke', color)
-        ;
+        /**
+         * [addLegend description]
+         */
+        function updateLegend() {
 
-        legend.append('text')
-          .attr('x', legendThumbSize + legendHeightSpacing)
-          .attr('y', legendThumbSize - legendHeightSpacing)
-          .text(function(d) { return d; })
-        ;
+          console.log('data length', $scope.data.length);
+          console.log('domain length', color.domain().length);
+
+          legend = legend
+            .data(color.domain())
+          ;
+
+          legend
+            .enter()
+            .append('g')
+              .attr('class', 'legend')
+              .attr('transform', function(d, i) {
+                var currentHeight = legendThumbSize + legendHeightSpacing,
+                    offset = currentHeight * legendMaxColumn / 2,
+                    x = ((height / 2) + (height / 6)) + (legendWidthSpacing * Math.floor(i / legendMaxColumn)),
+                    y = (i - (Math.floor(i / legendMaxColumn) * legendMaxColumn))  * currentHeight - offset
+                ;
+
+                return 'translate(' + x + ',' + y + ')';
+              })
+              .append('rect')
+                .attr('width', legendThumbSize)
+                .attr('height', legendThumbSize)
+                .style('fill', color)
+                .style('stroke', color)
+          ;
+
+          // legend
+          //   .append('text')
+          //     .attr('x', legendThumbSize + legendHeightSpacing)
+          //     .attr('y', legendThumbSize - legendHeightSpacing)
+          //     .text(function(d) { return d; })
+          // ;
+
+          legend
+            .exit()
+            .remove()
+          ;
+
+        }
+
+        updateLegend();
 
         /**
          * Tooltip
