@@ -7,8 +7,7 @@
   * to api
   */
   angular
-    .module('data.service', [
-    ])
+    .module('data.service')
     .service('DataService', [
       'API',
       'GISTS',
