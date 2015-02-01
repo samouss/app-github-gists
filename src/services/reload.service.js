@@ -7,8 +7,7 @@
   * automaticly
   */
   angular
-    .module('reload.service', [
-    ])
+    .module('reload.service')
     .constant('RELOAD', {
       INTERVAL_TIME: 60000,
       EVENTS: {
