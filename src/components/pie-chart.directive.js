@@ -35,17 +35,27 @@
             legendMaxColumn = 10
         ;
 
-        $scope.$watch('data', function(newData, oldData) {
-          if (newData !== oldData) {
+        $scope.$watch('data', onData);
 
-            $scope.data = newData;
+        /**
+         * On data handler
+         * @param  {array} newData
+         * @return {void}
+         */
+        function onData(newData) {
+          var tmp = [];
 
-            updatePath();
+          $scope.data = newData;
 
-            updateLegend();
+          $scope.data.forEach(function(data) {
+            tmp.push(data.language);
+          });
+          color.domain(tmp);
 
-          }
-        });
+          updatePath();
+          updateLegend();
+          addTooltip();
+        }
 
         var svg = d3
           .select('#chart')
@@ -69,7 +79,7 @@
         var path = svg.selectAll('path');
 
         /**
-         * [addPath description]
+         * Update path method
          */
         function updatePath() {
 
@@ -105,8 +115,11 @@
 
         }
 
-        updatePath();
-
+        /**
+         * Tween method for animate arc
+         * @param  {object} d
+         * @return {void}
+         */
         function arcTween(d) {
           var interpolate = d3.interpolate(this.currentValue, d);
           this.currentValue = interpolate(0);
@@ -122,56 +135,66 @@
         var legend = svg.selectAll('.legend');
 
         /**
-         * [addLegend description]
+         * Update legend method
          */
         function updateLegend() {
-
-          console.log('data length', $scope.data.length);
-          console.log('domain length', color.domain().length);
 
           legend = legend
             .data(color.domain())
           ;
 
-          legend
+          var wrapper = legend
             .enter()
             .append('g')
-              .attr('class', 'legend')
-              .attr('transform', function(d, i) {
-                var currentHeight = legendThumbSize + legendHeightSpacing,
-                    offset = currentHeight * legendMaxColumn / 2,
-                    x = ((height / 2) + (height / 6)) + (legendWidthSpacing * Math.floor(i / legendMaxColumn)),
-                    y = (i - (Math.floor(i / legendMaxColumn) * legendMaxColumn))  * currentHeight - offset
-                ;
+            .attr('class', 'legend')
+            .attr('transform', function(d, i) {
+              var currentHeight = legendThumbSize + legendHeightSpacing,
+                  offset = currentHeight * legendMaxColumn / 2,
+                  x = ((height / 2) + (height / 6)) + (legendWidthSpacing * Math.floor(i / legendMaxColumn)),
+                  y = (i - (Math.floor(i / legendMaxColumn) * legendMaxColumn))  * currentHeight - offset
+              ;
 
-                return 'translate(' + x + ',' + y + ')';
-              })
-              .append('rect')
-                .attr('width', legendThumbSize)
-                .attr('height', legendThumbSize)
-                .style('fill', color)
-                .style('stroke', color)
+              return 'translate(' + x + ',' + y + ')';
+            })
           ;
 
-          // legend
-          //   .append('text')
-          //     .attr('x', legendThumbSize + legendHeightSpacing)
-          //     .attr('y', legendThumbSize - legendHeightSpacing)
-          //     .text(function(d) { return d; })
-          // ;
+          wrapper
+            .append('rect')
+            .attr('width', legendThumbSize)
+            .attr('height', legendThumbSize)
+            .style('fill', color)
+            .style('stroke', color)
+          ;
+
+          wrapper
+            .append('text')
+            .attr('x', legendThumbSize + legendHeightSpacing)
+            .attr('y', legendThumbSize - legendHeightSpacing)
+            .text(function(d) { return d; })
+          ;
 
           legend
             .exit()
             .remove()
           ;
 
-        }
+          legend
+            .select('rect')
+            .style('fill', color)
+            .style('stroke', color)
+          ;
 
-        updateLegend();
+          legend
+            .select('text')
+            .text(function(d) { return d; })
+          ;
+
+        }
 
         /**
          * Tooltip
          */
+
         var tooltip = d3
           .select('#chart')
           .append('div')
@@ -196,29 +219,34 @@
             .attr('class', 'pie-count')
         ;
 
-        path.on('mouseover', function(d) {
-          var el = this,
-              elChart = document.getElementById('chart')
-          ;
+        /**
+         * Add event for tooltip
+         */
+        function addTooltip() {
+          path.on('mouseover', function(d) {
+            var el = this,
+                elChart = document.getElementById('chart')
+            ;
 
-          var total = d3.sum($scope.data.map(function(d) { return d.count; }));
-          tooltip.select('.pie-label').html(d.data.language);
-          tooltip.select('.pie-percent').html(Math.round(((100 * d.data.count) / total)) + '%');
-          tooltip.select('.pie-count').html('(' + d.data.count + ')');
+            var total = d3.sum($scope.data.map(function(d) { return d.count; }));
+            tooltip.select('.pie-label').html(d.data.language);
+            tooltip.select('.pie-percent').html(Math.round(((100 * d.data.count) / total)) + '%');
+            tooltip.select('.pie-count').html('(' + d.data.count + ')');
 
-          tooltip
-            .style('display', 'block')
-            .style('left', ((el.getBoundingClientRect().left - elChart.getBoundingClientRect().left) + (el.getBoundingClientRect().width / 2)) - (document.querySelector('.info-pie').getBoundingClientRect().width / 2) + 'px')
-            .style('top', ((el.getBoundingClientRect().top - elChart.getBoundingClientRect().top) + (el.getBoundingClientRect().height / 2)) - (document.querySelector('.info-pie').getBoundingClientRect().height / 2) + 'px')
-          ;
+            tooltip
+              .style('display', 'block')
+              .style('left', ((el.getBoundingClientRect().left - elChart.getBoundingClientRect().left) + (el.getBoundingClientRect().width / 2)) - (document.querySelector('.info-pie').getBoundingClientRect().width / 2) + 'px')
+              .style('top', ((el.getBoundingClientRect().top - elChart.getBoundingClientRect().top) + (el.getBoundingClientRect().height / 2)) - (document.querySelector('.info-pie').getBoundingClientRect().height / 2) + 'px')
+            ;
 
-        });
+          });
 
-        path.on('mouseout', function() {
-          tooltip
-            .style('display', 'none')
-          ;
-        });
+          path.on('mouseout', function() {
+            tooltip
+              .style('display', 'none')
+            ;
+          });
+        }
 
       }
     };
