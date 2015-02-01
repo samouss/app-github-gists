@@ -10,7 +10,7 @@
     .module('reload.service', [
     ])
     .constant('RELOAD', {
-      INTERVAL_TIME: 30000,
+      INTERVAL_TIME: 60000,
       EVENTS: {
         FILES: 'reload:files',
         STATS: 'reload:stats',
