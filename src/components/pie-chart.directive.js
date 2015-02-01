@@ -73,7 +73,6 @@
 
         var pie = d3.layout.pie()
           .value(function(d) { return d.count; })
-          .sort(null)
         ;
 
         var path = svg.selectAll('path');
