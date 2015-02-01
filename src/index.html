@@ -20,12 +20,10 @@
 
   <header>
     <nav class="navbar navbar-default">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">
-            <i class="fa fa-github"></i> GistDash
-          </a>
-        </div>
+      <div
+        class="container-fluid"
+        ui-view="header"
+      >
       </div>
     </nav>
   </header>
@@ -33,7 +31,7 @@
   <div class="container">
     <div
       class="row"
-      ui-view
+      ui-view="container"
     >
     </div>
   </div>

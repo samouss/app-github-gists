@@ -15,6 +15,8 @@
    * [RootController description]
    * @param {[type]} ReloadService [description]
    */
-  function RootController(ReloadService) {}
+  function RootController(ReloadService) {
+    ReloadService.init();
+  }
 
 }());

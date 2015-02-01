@@ -14,8 +14,17 @@
         $stateProvider
 
           .state('root', {
-            templateUrl: 'root/root.template.html',
-            controller: 'RootController',
+            views: {
+              'container': {
+                templateUrl: 'root/root.template.html',
+                controller: 'RootController'
+              },
+              'header': {
+                templateUrl: 'header/header.template.html',
+                controller: 'HeaderController',
+                controllerAs: 'vm'
+              }
+            },
             resolve: {
               gists: [
                 'DataService',
