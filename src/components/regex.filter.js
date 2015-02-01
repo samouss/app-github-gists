@@ -7,11 +7,7 @@
   * regex given
   */
   angular
-    .module('regex.filter', [
-    ])
-    .constant('REGEX', {
-      PATTERN: '##PATTERN##'
-    })
+    .module('regex.filter')
     .filter('regex', [
       'REGEX',
       Regex
