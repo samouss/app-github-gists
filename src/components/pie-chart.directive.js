@@ -4,8 +4,7 @@
   * Pie chart directive module
   */
   angular
-    .module('pie-chart.directive', [
-    ])
+    .module('pie-chart.directive')
     .directive('pieChart', [
       'd3',
       PieChart
