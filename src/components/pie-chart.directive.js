@@ -46,9 +46,14 @@
 
           $scope.data = newData;
 
-          $scope.data.forEach(function(data) {
-            tmp.push(data.language);
-          });
+          $scope.data
+            .sort(function(a, b) {
+              return b.count - a.count;
+            })
+            .forEach(function(data) {
+              tmp.push(data.language);
+            })
+          ;
           color.domain(tmp);
 
           updatePath();
@@ -72,6 +77,7 @@
 
         var pie = d3.layout.pie()
           .value(function(d) { return d.count; })
+          .sort(null)
         ;
 
         var path = svg.selectAll('path');
@@ -93,6 +99,7 @@
                 return color(d.data.language);
               })
               .each(function(d) {
+                console.log(d);
                 this.currentValue = d;
               })
           ;
