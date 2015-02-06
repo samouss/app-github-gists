@@ -99,7 +99,6 @@
                 return color(d.data.language);
               })
               .each(function(d) {
-                console.log(d);
                 this.currentValue = d;
               })
           ;
