@@ -8,6 +8,7 @@
 
     .constant('API', {
       ENDPOINT: 'https://api.github.com',
+      // Edit this line for provide an ACCESS_TOKEN
       ACCESS_TOKEN: null
     })
 
