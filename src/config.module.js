@@ -7,7 +7,8 @@
     .module('app.config', [])
 
     .constant('API', {
-      ENDPOINT: 'https://api.github.com'
+      ENDPOINT: 'https://api.github.com',
+      ACCESS_TOKEN: null
     })
 
     .constant('GISTS', {
@@ -15,6 +16,13 @@
     })
 
     .constant('d3', d3)
+
+    .config([
+      '$httpProvider',
+      function($httpProvider) {
+        $httpProvider.interceptors.push('GistInterceptor');
+      }
+    ])
 
   ;
 

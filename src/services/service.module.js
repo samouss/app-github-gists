@@ -6,7 +6,9 @@
   angular
     .module('app.services', [
       'data.service',
-      'reload.service'
+      'reload.service',
+
+      'interceptor.factory'
     ])
   ;
 
