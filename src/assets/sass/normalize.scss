@@ -1,0 +1,4 @@
+// Normalize
+hr {
+  @include box-sizing(border-box);
+}

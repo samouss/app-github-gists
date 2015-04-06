@@ -1,0 +1,47 @@
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html lang="en" ng-app="app">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>App Github Gists</title>
+  <meta name="description" content="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="/assets/css/main.css" type="text/css" media="screen" />
+
+  <script src="/assets/js/modernizr.js"></script>
+</head>
+
+<body>
+
+  <header>
+    <nav class="navbar navbar-default navbar-fixed-top">
+      <div
+        class="container-fluid"
+        ui-view="header"
+      >
+      </div>
+    </nav>
+  </header>
+
+  <div class="container wrapper">
+    <div
+      class="row"
+      ui-view="container"
+    >
+    </div>
+  </div>
+
+  <footer></footer>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="/assets/js/jquery.js"><\/script>')</script>
+  <script src="/assets/js/vendor.js"></script>
+  <script src="/assets/js/main.js"></script>
+</body>
+
+</html>

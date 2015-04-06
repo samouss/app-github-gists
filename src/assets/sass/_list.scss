@@ -1,0 +1,53 @@
+// List
+.wrapper {
+  padding-top: 70px;
+}
+form {
+  .form-group {
+    margin-bottom: 0;
+  }
+  .radio {
+    padding-top: 2px !important;
+  }
+  input[type="radio"] {
+    margin-top: 2px;
+  }
+  label {
+    white-space: nowrap;
+  }
+  input[type="text"] {
+    margin-top: 2px;
+    padding-right: 30px;
+  }
+  a {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    color: $black;
+    transition: color .25s;
+    &:hover {
+      color: lighten($black, 60);
+    }
+  }
+}
+.table-gist {
+
+  .td-username {
+    word-wrap: nowrap;
+  }
+  td {
+    vertical-align: middle !important;
+  }
+  .img-circle {
+    width: 30px;
+  }
+  .username {
+    margin-left: 5px;
+  }
+  i {
+    font-size: 35px;
+    vertical-align: -7px;
+    height: 30px;
+    margin-top: -5px;
+  }
+}

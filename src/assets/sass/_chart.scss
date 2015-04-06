@@ -1,0 +1,27 @@
+// Chart
+#chart {
+  text-align: center;
+  position: relative;
+
+  .info-pie {
+    background: $well-bg;
+    text-align: center;
+    position: absolute;
+    padding: 5px;
+    border: 1px solid $black;
+    border-radius: 4px;
+    display: none;
+    pointer-events: none;
+
+    .stats {
+      font-size: 1.1rem;
+
+      .pie-percent {
+        margin-right: 3px;
+      }
+    }
+    &:hover {
+      display: block;
+    }
+  }
+}
