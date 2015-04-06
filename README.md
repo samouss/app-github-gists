@@ -1,5 +1,10 @@
 ## Gistdash
 
+App display stats of 100 last Gists from Github.
+This app run with Angular and D3.
+
+View the demo at : [samouss.github.io/gistdash](http://samouss.github.io/gistdash/#/)
+
 Install dependencies:
 
     sudo gem install sass
